@@ -4,7 +4,11 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import static org.testng.AssertJUnit.assertTrue;
 
 public class ToDoMVCTest {
     private static ChromeDriver driver;
@@ -20,8 +24,8 @@ public class ToDoMVCTest {
 
     @Test
     public void testAddOneItem() {
-        //add one item to the list
-        //check it exits
+        driver.findElement(By.className("new-todo")).sendKeys("Test 1", Keys.ENTER); //add one item to the list
+        assertTrue(driver.findElement(By.className("todo-list")).getText().contains("Test 1"));  //check it exits
     }
 
 
