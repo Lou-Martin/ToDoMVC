@@ -3,31 +3,35 @@ package todomvc;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-
-import static org.testng.AssertJUnit.assertTrue;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class ToDoMVCTest {
-    private static ChromeDriver driver;
+
+    private static WebDriver driver;
+
     @BeforeAll
     public static void setUp() {
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--remote-allow-origins=*");
+        driver = new ChromeDriver(options);
         driver.get("https://todomvc.com/examples/react/#/");  // Navigate to the webpage before each test
     }
 
+    public static void populateList(int numberOfItems) {
+        WebElement newTodo = driver.findElement(By.className("new-todo")); //find blank list
 
-    //TEST CASES BELOW
-
-    @Test
-    public void testAddOneItem() {
-        driver.findElement(By.className("new-todo")).sendKeys("Test 1", Keys.ENTER); //add one item to the list
-        assertTrue(driver.findElement(By.className("todo-list")).getText().contains("Test 1"));  //check it exits
+        for(int i = 1; i <= numberOfItems; i++){
+            String message = String.format("Test %s", i);
+            newTodo.sendKeys(message, Keys.ENTER); //potentially add wait if helper method fails
+        }
     }
-
+    //TEST CASES BELOW
 
     //RUN BELOW OC OF TESTS
     @AfterAll
