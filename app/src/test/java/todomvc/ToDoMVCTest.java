@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -67,6 +68,19 @@ public class ToDoMVCTest {
         act.doubleClick(todo1).perform();
         driver.switchTo().activeElement().sendKeys("EDITED TEST", Keys.ESCAPE);
         assertTrue(todo1.isDisplayed());
+    }
+
+    @Test
+    public void testDeleteIncompleteToDoItem(){
+        populateList(1);
+        WebElement todo1 = driver.findElement(By.xpath("//*[text()='Test 1']"));
+        Actions action = new Actions(driver);
+        action.moveToElement(todo1).perform();
+        WebElement deleteButton = driver.findElement(By.className("destroy"));
+        wait.until(ExpectedConditions.visibilityOf(deleteButton));
+        deleteButton.click();
+        //code below generates a list of element(S) - useful for proving elements don't exist
+        assertTrue(driver.findElements(By.xpath("//*[text()='Test 1']")).isEmpty());
     }
 
     //RUN BELOW OC OF TESTS
