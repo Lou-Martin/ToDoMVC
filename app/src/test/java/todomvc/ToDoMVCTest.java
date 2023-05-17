@@ -1,8 +1,8 @@
 package todomvc;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -11,10 +11,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ToDoMVCTest {
@@ -22,8 +22,8 @@ public class ToDoMVCTest {
     private static WebDriver driver;
     private static WebDriverWait wait;
 
-    @BeforeAll
-    public static void setUp() {
+    @BeforeEach
+    public void setUp() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
@@ -59,9 +59,19 @@ public class ToDoMVCTest {
 
     }
 
+    @Test
+    public void testEscapeModifyCancelsEdit(){
+        populateList(1);
+        WebElement todo1 = driver.findElement(By.xpath("//*[text()='Test 1']"));
+        Actions act = new Actions(driver);
+        act.doubleClick(todo1).perform();
+        driver.switchTo().activeElement().sendKeys("EDITED TEST", Keys.ESCAPE);
+        assertTrue(todo1.isDisplayed());
+    }
+
     //RUN BELOW OC OF TESTS
-    @AfterAll
-    public static void closeBrowser() {
+    @AfterEach
+    public void closeBrowser() {
         if (driver != null) driver.quit(); //close the browser after each test
     }
 
