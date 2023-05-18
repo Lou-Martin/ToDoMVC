@@ -43,6 +43,7 @@ public class ToDoMVCTest {
             String message = String.format("Test %s", i);
             newTodo.sendKeys(message, Keys.ENTER); //potentially add wait if helper method fails
             //Below break needs refactoring to reduce run times for large runs
+            //Currently included due to poor internet causing function to fail
             try {
                 Thread.sleep(500); // Sleep for 500 milliseconds (half a second)
             } catch (InterruptedException e) {
@@ -95,6 +96,22 @@ public class ToDoMVCTest {
         wait.until(ExpectedConditions.visibilityOf(deleteButton));
         deleteButton.click();
         assertTrue(driver.findElements(By.xpath("//*[text()='Test 1']")).isEmpty());
+    }
+
+    @Test
+    public void testToDoCountReturnsCorrectString(){
+        populateList(1);
+        assertTrue(driver.findElement(By.className("todo-count")).getText().contains("1 item left"));
+        driver.findElement(By.className("toggle")).click();
+        assertTrue(driver.findElement(By.className("todo-count")).getText().contains("0 items left"));
+        populateList(2);
+        assertTrue(driver.findElement(By.className("todo-count")).getText().contains("2 items left"));
+        //Checking upper limits - can it handle 3 digits?
+        //Currently passes, but due to wait times in populateList commented out for general test runs to save time
+        //Candidate for refactoring - make test optional at start of run? Refactor populateList?
+        //populateList(98);
+        //assertTrue(driver.findElement(By.className("todo-count")).getText().contains("100 items left"));
+
     }
 
     //RUN BELOW OC OF TESTS
