@@ -134,6 +134,34 @@ public class ToDoMVCTest {
 
     }
 
+    //Below test is an alternate version of above that checks the url instead of page content.
+    @Test
+    public void testStatusBarURL() {
+        populateList(1);
+        driver.findElement(By.linkText("Active")).click();
+        //3 assertions in 1 test; when refactoring add exception handling or make potential failures explicit
+        assertEquals("https://todomvc.com/examples/react/#/active", driver.getCurrentUrl());
+        driver.findElement(By.linkText("Completed")).click();
+        assertEquals("https://todomvc.com/examples/react/#/completed", driver.getCurrentUrl());
+        driver.findElement(By.linkText("All")).click();
+        assertEquals("https://todomvc.com/examples/react/#/", driver.getCurrentUrl());
+
+    }
+
+    @Test
+    public void testCharacterLimit(){
+        String message = "a".repeat(256);
+        driver.findElement(By.className("new-todo")).sendKeys(message, Keys.ENTER);
+        assertTrue(driver.findElement(By.xpath(String.format("//*[text()='%s']", message))).isDisplayed());
+    }
+
+    @Test
+    public void testWordCount(){
+        String message2 = "a ".repeat(128);
+        driver.findElement(By.className("new-todo")).sendKeys(message2, Keys.ENTER);
+        assertTrue(driver.findElement(By.xpath(String.format("//*[text()='%s']", message2.strip()))).isDisplayed());
+    }
+
     //RUN BELOW OC OF TESTS
     @AfterEach
     public void closeBrowser() {
