@@ -114,6 +114,12 @@ public class ToDoMVCTest {
 
     }
 
+    @Test
+    public void testToDoCountNotDisplayedWithNoItems(){
+        assertTrue(driver.findElements(By.className("todo-count")).isEmpty());
+    }
+
+
     //RUN BELOW OC OF TESTS
     @AfterEach
     public void closeBrowser() {
