@@ -1,3 +1,6 @@
+// Note: working to minimum viable product on these tests currently.
+// Once all tests are implemented, plan to return and refactor for robustness and time efficiency
+
 package todomvc;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -80,6 +83,17 @@ public class ToDoMVCTest {
         wait.until(ExpectedConditions.visibilityOf(deleteButton));
         deleteButton.click();
         //code below generates a list of element(S) - useful for proving elements don't exist
+        assertTrue(driver.findElements(By.xpath("//*[text()='Test 1']")).isEmpty());
+    }
+
+    @Test
+    public void testDeleteCompleteToDoItem(){
+        populateList(1);
+        driver.findElement(By.className("toggle")).click();
+        // add lines to assert item is completed
+        WebElement deleteButton = driver.findElement(By.className("destroy"));
+        wait.until(ExpectedConditions.visibilityOf(deleteButton));
+        deleteButton.click();
         assertTrue(driver.findElements(By.xpath("//*[text()='Test 1']")).isEmpty());
     }
 
