@@ -173,6 +173,17 @@ public class ToDoMVCTest {
         assertTrue(driver.findElements(By.xpath("//*[text()='Test 1']")).isEmpty());
     }
 
+    @Test
+    public void testDownArrowToggleAllIncomplete(){
+        populateList(1);
+        driver.findElement(By.cssSelector(".main > label")).click();
+        driver.findElement(By.linkText("Completed")).click();
+        assertEquals(1, driver.findElements(By.className("view")).size());
+        driver.findElement(By.cssSelector(".main > label")).click();
+        driver.findElement(By.linkText("Active")).click();
+        assertEquals(1, driver.findElements(By.className("view")).size());
+    }
+
     //RUN BELOW OC OF TESTS
     @AfterEach
     public void closeBrowser() {
