@@ -19,6 +19,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ToDoMVCTest {
@@ -124,11 +125,12 @@ public class ToDoMVCTest {
         populateList(3);
         driver.findElement(By.className("toggle")).click();
         driver.findElement(By.linkText("Active")).click();
-        //add assert here
+        //3 assertions in 1 test; when refactoring add exception handling or make potential failures explicit
+        assertEquals(2, driver.findElements(By.className("view")).size());
         driver.findElement(By.linkText("Completed")).click();
-        //add assert here
+        assertEquals(1, driver.findElements(By.className("view")).size());
         driver.findElement(By.linkText("All")).click();
-        //add assert here
+        assertEquals(3, driver.findElements(By.className("view")).size());
 
     }
 
