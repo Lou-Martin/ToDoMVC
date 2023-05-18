@@ -163,10 +163,12 @@ public class ToDoMVCTest {
     }
 
     @Test
-    public void testClearCompletedDisplayed(){
+    public void testClearCompleted(){
         populateList(1);
         driver.findElement(By.className("toggle")).click();
         assertTrue(driver.findElement(By.className("clear-completed")).isDisplayed());
+        driver.findElement(By.className("clear-completed")).click();
+        assertTrue(driver.findElements(By.xpath("//*[text()='Test 1']")).isEmpty());
     }
 
     //RUN BELOW OC OF TESTS
