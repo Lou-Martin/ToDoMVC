@@ -162,6 +162,13 @@ public class ToDoMVCTest {
         assertTrue(driver.findElement(By.xpath(String.format("//*[text()='%s']", message2.strip()))).isDisplayed());
     }
 
+    @Test
+    public void testClearCompletedDisplayed(){
+        populateList(1);
+        driver.findElement(By.className("toggle")).click();
+        assertTrue(driver.findElement(By.className("clear-completed")).isDisplayed());
+    }
+
     //RUN BELOW OC OF TESTS
     @AfterEach
     public void closeBrowser() {
