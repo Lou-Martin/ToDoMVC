@@ -119,6 +119,18 @@ public class ToDoMVCTest {
         assertTrue(driver.findElements(By.className("todo-count")).isEmpty());
     }
 
+    @Test
+    public void testStatusBarToggle(){
+        populateList(3);
+        driver.findElement(By.className("toggle")).click();
+        driver.findElement(By.linkText("Active")).click();
+        //add assert here
+        driver.findElement(By.linkText("Completed")).click();
+        //add assert here
+        driver.findElement(By.linkText("All")).click();
+        //add assert here
+
+    }
 
     //RUN BELOW OC OF TESTS
     @AfterEach
