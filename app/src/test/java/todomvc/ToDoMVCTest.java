@@ -1,6 +1,8 @@
 // Note: working to minimum viable product on these tests currently.
 // Once all tests are implemented, plan to return and refactor for robustness and time efficiency
 
+//Test branch
+
 package todomvc;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -26,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ToDoMVCTest {
 
     private static WebDriver driver;
-    private static WebDriverWait wait;a
+    private static WebDriverWait wait;
 
     @BeforeEach
     public void setUp() {
