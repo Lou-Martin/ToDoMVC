@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ToDoMVCTest {
 
     private static WebDriver driver;
-    private static WebDriverWait wait;
+    private static WebDriverWait wait;a
 
     @BeforeEach
     public void setUp() {
