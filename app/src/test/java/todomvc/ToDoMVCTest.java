@@ -184,6 +184,30 @@ public class ToDoMVCTest {
         assertEquals(1, driver.findElements(By.className("view")).size());
     }
 
+    @Test
+    public void testDownArrowToggleAllComplete(){
+        populateList(1);
+        driver.findElement(By.className("toggle")).click();
+        driver.findElement(By.cssSelector(".main > label")).click();
+        driver.findElement(By.linkText("Active")).click();
+        assertEquals(1, driver.findElements(By.className("view")).size());
+        driver.findElement(By.cssSelector(".main > label")).click();
+        driver.findElement(By.linkText("Completed")).click();
+        assertEquals(1, driver.findElements(By.className("view")).size());
+    }
+
+    @Test
+    public void testDownArrowToggleMix(){
+        populateList(2);
+        driver.findElement(By.className("toggle")).click();
+        driver.findElement(By.cssSelector(".main > label")).click();
+        driver.findElement(By.linkText("Completed")).click();
+        assertEquals(2, driver.findElements(By.className("view")).size());
+        driver.findElement(By.cssSelector(".main > label")).click();
+        driver.findElement(By.linkText("Active")).click();
+        assertEquals(2, driver.findElements(By.className("view")).size());
+    }
+
     //RUN BELOW OC OF TESTS
     @AfterEach
     public void closeBrowser() {
