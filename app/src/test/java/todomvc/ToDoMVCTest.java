@@ -36,7 +36,7 @@ public class ToDoMVCTest {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); // Wait time purposefully set high as one tester has a known poor internet connection
+        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         driver.get("https://todomvc.com/examples/react/#/");  // Navigate to the webpage before each test
         wait = new WebDriverWait(driver, Duration.ofMillis(500));
     }
