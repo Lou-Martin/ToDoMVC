@@ -38,7 +38,7 @@ public class ToDoMVCTest {
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); // Wait time purposefully set high as one tester has a known poor internet connection
         driver.get("https://todomvc.com/examples/react/#/");  // Navigate to the webpage before each test
-        wait = new WebDriverWait(driver, Duration.ofSeconds(1));
+        wait = new WebDriverWait(driver, Duration.ofMillis(500));
     }
 
     public static void populateList(int numberOfItems) {
