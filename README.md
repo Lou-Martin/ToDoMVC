@@ -11,6 +11,11 @@ Before writing any tests, we plan to write up code to initialize the test enviro
 # Notes
 ### Refactoring and POM ###
 In the initial design process of this test suite we decided to create tests to cover the "Automate Now" test cases and come back once completed to assess which locators, actions and methods could be removed and used in a POM. Given more time we would create a POM that would be framework agnostic in order to quickly gain coverage of not just react but as many frameworks as possible used on ToDoMVC.
+### Future refactoring/improvements candidates ###
+Below are a few ideas for future areas of refactoring or improving the test code:
+* Merge the "getToggleElement" and "getToDoElement" into a single "getElement" which would take a String of the desired element as an argument. This would reduce effort when writing new tests, and would possibly be included in the POM.
+* Mid-test assertions or try / catch to ensure test is in correct state before continuing eg ensure todo is marked complete before continuing test.
+* Specifically in the "Clear completed" test, need to update test to include multiple items with some complete and some incomplete to check it only removed completed items.
 ### Wait times ### 
 If internet speed prevents test running successfully, modify implicit wait time in line 39. This will cause some test which rely on "is Empty" to appear to hang; this is expected and they should complete. Only raise as an issue if they hang for significantly more than the set implicit wait time.
 Update: removed "isEmpty" and replaced with "invisibilityOf" which provided some reduction in runtime.
