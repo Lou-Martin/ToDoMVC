@@ -36,7 +36,7 @@ public class ToDoMVCTest {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); // Wait time purposefully set high as one tester has a known poor internet connection
         driver.get("https://todomvc.com/examples/react/#/");  // Navigate to the webpage before each test
         wait = new WebDriverWait(driver, Duration.ofSeconds(1));
     }
@@ -46,14 +46,8 @@ public class ToDoMVCTest {
 
         for(int i = 1; i <= numberOfItems; i++){
             String message = String.format("Test %s", i);
-            newTodo.sendKeys(message, Keys.ENTER); //potentially add wait if helper method fails
-            //Below break needs refactoring to reduce run times for large runs
-            //Currently included due to poor internet causing function to fail
-            try {
-                Thread.sleep(500); // Sleep for 500 milliseconds (half a second)
-            } catch (InterruptedException e) {
-                // Handle the exception, if necessary
-            }
+            newTodo.sendKeys(message, Keys.ENTER);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.format("//*[text()='%s']", message))));
         }
     }
     //TEST CASES BELOW
@@ -111,11 +105,8 @@ public class ToDoMVCTest {
         assertTrue(driver.findElement(By.className("todo-count")).getText().contains("0 items left"));
         populateList(2);
         assertTrue(driver.findElement(By.className("todo-count")).getText().contains("2 items left"));
-        //Checking upper limits - can it handle 3 digits?
-        //Currently passes, but due to wait times in populateList commented out for general test runs to save time
-        //Candidate for refactoring - make test optional at start of run? Refactor populateList?
-        //populateList(98);
-        //assertTrue(driver.findElement(By.className("todo-count")).getText().contains("100 items left"));
+        populateList(98);
+        assertTrue(driver.findElement(By.className("todo-count")).getText().contains("100 items left"));
 
     }
 
