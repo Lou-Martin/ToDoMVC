@@ -18,16 +18,22 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ToDoMVCTest {
 
     private static WebDriver driver;
     private static WebDriverWait wait;
+    public WebElement getToggleElement() {
+        return driver.findElement(By.className("toggle"));
+    }
+
+    public WebElement getNewTodoElement() {
+        return driver.findElement(By.className("new-todo"));
+    }
+
 
     @BeforeEach
     public void setUp() {
@@ -87,7 +93,7 @@ public class ToDoMVCTest {
     @Test
     public void testDeleteCompleteToDoItem(){
         populateList(1);
-        driver.findElement(By.className("toggle")).click();
+        getToggleElement().click();
         // add lines to assert item is completed
         WebElement deleteButton = driver.findElement(By.className("destroy"));
         wait.until(ExpectedConditions.visibilityOf(deleteButton));
@@ -99,7 +105,7 @@ public class ToDoMVCTest {
     public void testToDoCountReturnsCorrectString(){
         populateList(1);
         assertTrue(driver.findElement(By.className("todo-count")).getText().contains("1 item left"));
-        driver.findElement(By.className("toggle")).click();
+        getToggleElement().click();
         assertTrue(driver.findElement(By.className("todo-count")).getText().contains("0 items left"));
         populateList(2);
         assertTrue(driver.findElement(By.className("todo-count")).getText().contains("2 items left"));
@@ -116,7 +122,7 @@ public class ToDoMVCTest {
     @Test
     public void testStatusBarToggle(){
         populateList(3);
-        driver.findElement(By.className("toggle")).click();
+        getToggleElement().click();
         driver.findElement(By.linkText("Active")).click();
         //3 assertions in 1 test; when refactoring add exception handling or make potential failures explicit
         assertEquals(2, driver.findElements(By.className("view")).size());
@@ -144,21 +150,21 @@ public class ToDoMVCTest {
     @Test
     public void testCharacterLimit(){
         String message = "a".repeat(256);
-        driver.findElement(By.className("new-todo")).sendKeys(message, Keys.ENTER);
+        getNewTodoElement().sendKeys(message, Keys.ENTER);
         assertTrue(driver.findElement(By.xpath(String.format("//*[text()='%s']", message))).isDisplayed());
     }
 
     @Test
     public void testWordCount(){
         String message2 = "a ".repeat(128);
-        driver.findElement(By.className("new-todo")).sendKeys(message2, Keys.ENTER);
+        getNewTodoElement().sendKeys(message2, Keys.ENTER);
         assertTrue(driver.findElement(By.xpath(String.format("//*[text()='%s']", message2.strip()))).isDisplayed());
     }
 
     @Test
     public void testClearCompleted(){
         populateList(1);
-        driver.findElement(By.className("toggle")).click();
+        getToggleElement().click();
         assertTrue(driver.findElement(By.className("clear-completed")).isDisplayed());
         driver.findElement(By.className("clear-completed")).click();
         assertTrue(wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[text()='Test 1']"))));
@@ -178,7 +184,7 @@ public class ToDoMVCTest {
     @Test
     public void testDownArrowToggleAllComplete(){
         populateList(1);
-        driver.findElement(By.className("toggle")).click();
+        getToggleElement().click();
         driver.findElement(By.cssSelector(".main > label")).click();
         driver.findElement(By.linkText("Active")).click();
         assertEquals(1, driver.findElements(By.className("view")).size());
@@ -190,7 +196,7 @@ public class ToDoMVCTest {
     @Test
     public void testDownArrowToggleMix(){
         populateList(2);
-        driver.findElement(By.className("toggle")).click();
+        getToggleElement().click();
         driver.findElement(By.cssSelector(".main > label")).click();
         driver.findElement(By.linkText("Completed")).click();
         assertEquals(2, driver.findElements(By.className("view")).size());
