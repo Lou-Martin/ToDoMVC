@@ -22,8 +22,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ToDoMVCTest {
 
@@ -82,8 +81,7 @@ public class ToDoMVCTest {
         WebElement deleteButton = driver.findElement(By.className("destroy"));
         wait.until(ExpectedConditions.visibilityOf(deleteButton));
         deleteButton.click();
-        //code below generates a list of element(S) - useful for proving elements don't exist
-        assertTrue(driver.findElements(By.xpath("//*[text()='Test 1']")).isEmpty());
+        assertTrue(wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[text()='Test 1']"))));
     }
 
     @Test
@@ -94,7 +92,7 @@ public class ToDoMVCTest {
         WebElement deleteButton = driver.findElement(By.className("destroy"));
         wait.until(ExpectedConditions.visibilityOf(deleteButton));
         deleteButton.click();
-        assertTrue(driver.findElements(By.xpath("//*[text()='Test 1']")).isEmpty());
+        assertTrue(wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[text()='Test 1']"))));
     }
 
     @Test
@@ -112,7 +110,7 @@ public class ToDoMVCTest {
 
     @Test
     public void testToDoCountNotDisplayedWithNoItems(){
-        assertTrue(driver.findElements(By.className("todo-count")).isEmpty());
+        assertTrue(wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("todo-count"))));
     }
 
     @Test
@@ -163,7 +161,7 @@ public class ToDoMVCTest {
         driver.findElement(By.className("toggle")).click();
         assertTrue(driver.findElement(By.className("clear-completed")).isDisplayed());
         driver.findElement(By.className("clear-completed")).click();
-        assertTrue(driver.findElements(By.xpath("//*[text()='Test 1']")).isEmpty());
+        assertTrue(wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[text()='Test 1']"))));
     }
 
     @Test

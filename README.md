@@ -12,6 +12,7 @@ Before writing any tests, we plan to write up code to initialize the test enviro
 
 ### Wait times ### 
 If internet speed prevents test running successfully, modify implicit wait time in line 39. This will cause some test which rely on "is Empty" to appear to hang; this is expected and they should complete. Only raise as an issue if they hang for significantly more than the set implicit wait time.
+Update: removed "isEmpty" and replaced with "invisibilityOf" which provided some reduction in runtime.
 
 # Test cases
 
