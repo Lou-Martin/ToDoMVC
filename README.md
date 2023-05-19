@@ -9,7 +9,8 @@ Our initial goal is to make a minimum viable product which covers all automate n
 Before writing any tests, we plan to write up code to initialize the test environment (and close it following each test to reset), and to write a function to populate the the ToDo list with n items “Test #” where # is a number from 1 to n.
 
 # Notes
-
+### Refactoring and POM ###
+In the initial design process of this test suite we decided to create tests to cover the "Automate Now" test cases and come back once completed to assess which locators, actions and methods could be removed and used in a POM. Given more time we would create a POM that would be framework agnostic in order to quickly gain coverage of not just react but as many frameworks as possible used on ToDoMVC.
 ### Wait times ### 
 If internet speed prevents test running successfully, modify implicit wait time in line 39. This will cause some test which rely on "is Empty" to appear to hang; this is expected and they should complete. Only raise as an issue if they hang for significantly more than the set implicit wait time.
 Update: removed "isEmpty" and replaced with "invisibilityOf" which provided some reduction in runtime.
